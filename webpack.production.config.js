@@ -4,17 +4,16 @@ const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const StatsPlugin = require('stats-webpack-plugin');
 
-module.exports = {
-  context: __dirname,
-  devtool: "eval-source-map",
-  entry: [
-    "webpack-hot-middleware/client?reload=true",
+module.exports = [{
+  entry: {
     path.join(__dirname, 'app/app.jsx')
-  ],
+  },
   output: {
     path: path.join(__dirname, "/build/"),
-    filename: "[name].js",
+    filename: "[name]-[hash].min.js",
     publicPath: '/'
   },
   module: {
@@ -34,23 +33,35 @@ module.exports = {
        },
        {
          test: /\.css$/,
-         loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+         loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
        }
      ]
   },
+  postcss: [
+    require("autoprefixer")
+  ]
   plugins: [
     new WebpackCleanupPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      title: "Intelligence IDE",
-      template: "app/index.template.html",
-      inject: "body",
+      template: 'app/index.template.html',
+      inject: 'body',
       filename: 'index.html'
-
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('[name]-[hash].min.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false,
+          screw_ie8: true
+      }
+    }),
+    new StatsPlugin("webpack.stats.json", {
+      source: false,
+      modules: false
+    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ]
-};
+}];

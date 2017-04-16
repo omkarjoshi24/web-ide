@@ -1,10 +1,12 @@
+'use strict';
+
 import React from "react";
 import ReactDOM from "react-dom";
 
 class Layout extends React.Component {
   render() {
     return (
-      <h1>It's Working!</h1>
+      <h1>It's Working!!!</h1>
     );
   }
 }
