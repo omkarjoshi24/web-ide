@@ -1,12 +1,14 @@
 'use strict';
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TopMenu from './components/topmenu.jsx'
+import 'bootstrap/dist/css/bootstrap.css'
 
-class Layout extends React.Component {
+export default class Layout extends React.Component {
   render() {
     return (
-      <h1>It's Working!!!</h1>
+      <TopMenu />
     );
   }
 }
