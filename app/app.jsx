@@ -3,13 +3,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TopMenu from './components/topmenu.jsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap-theme.min.css';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 export default class Layout extends React.Component {
   render() {
     return (
-      <TopMenu />
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <TopMenu />
+      </MuiThemeProvider>
     );
   }
 }

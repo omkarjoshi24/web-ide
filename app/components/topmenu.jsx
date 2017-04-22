@@ -1,11 +1,12 @@
 'use strict';
 
 import React from 'react';
+import AppBar from 'material-ui/AppBar';
 
 export default class TopMenu extends React.Component {
   render() {
     return (
-      <nav>Hi it's working</nav>
+      <AppBar title="Intelligent IDE"></AppBar>
     );
   }
 }
