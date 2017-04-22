@@ -51,6 +51,10 @@ module.exports = {
 			 {
          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
          loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+       },
+       {
+         test: /\.(jpe?g|png|gif|svg)$/i,
+         loader: "file-loader?name=/assets/images/[name].[ext]"
        }
      ]
   },
